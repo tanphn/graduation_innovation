@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Graduation Invitation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:
+    linear-gradient(
+        rgba(13,17,23,0.82),
+        rgba(13,17,23,0.82)
+    ),
+    url('background.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    overflow:hidden;
+
+    font-family:'JetBrains Mono', monospace;
+
+    color:#c9d1d9;
+}
+
+/* SCANLINE */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+    linear-gradient(
+        rgba(255,255,255,0.02) 1px,
+        transparent 1px
+    );
+
+    background-size:100% 4px;
+
+    pointer-events:none;
+
+    z-index:2;
+}
+
+/* MATRIX */
+
+#matrix{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    z-index:0;
+}
+
+/* BOOT SCREEN */
+
+.boot-screen{
+
+    position:fixed;
+
+    width:100%;
+    height:100%;
+
+    background:#000;
+
+    z-index:999;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    color:#58a6ff;
+
+    padding:30px;
+
+    transition:1s;
+}
+
+.boot-text{
+
+    width:90%;
+
+    max-width:700px;
+
+    line-height:2;
+
+    white-space:pre-line;
+
+    text-shadow:
+    0 0 10px rgba(88,166,255,0.25);
+}
+
+/* FLOATING CODE */
+
+.code{
+
+    position:absolute;
+
+    color:rgba(201,209,217,0.05);
+
+    font-size:18px;
+
+    white-space:nowrap;
+
+    animation:float 18s linear infinite;
+}
+
+@keyframes float{
+
+    from{
+        transform:translateY(110vh);
+    }
+
+    to{
+        transform:translateY(-120vh);
+    }
+}
+
+/* TERMINAL */
+
+.terminal{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:760px;
+
+    max-width:92%;
+
+    background:rgba(13,17,23,0.52);
+
+    border:1px solid rgba(88,166,255,0.12);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(22px);
+
+    box-shadow:
+    0 0 40px rgba(88,166,255,0.08),
+    0 0 120px rgba(88,166,255,0.04);
+
+    z-index:10;
+
+    opacity:0;
+
+    transition:
+    all 1s cubic-bezier(.22,1,.36,1);
+}
+
+/* TOPBAR */
+
+.topbar{
+
+    background:rgba(22,27,34,0.72);
+
+    padding:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border-bottom:
+    1px solid rgba(88,166,255,0.08);
+}
+
+.dot{
+
+    width:13px;
+    height:13px;
+
+    border-radius:50%;
+}
+
+.red{ background:#ff5f56; }
+.yellow{ background:#ffbd2e; }
+.green{ background:#27c93f; }
+
+.title{
+
+    color:#8b949e;
+
+    font-size:14px;
+
+    margin-left:10px;
+}
+
+/* CONTENT */
+
+.content{
+
+    padding:48px;
+
+    font-size:18px;
+
+    line-height:2;
+}
+
+/* TYPING */
+
+.typing{
+
+    color:#58a6ff;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    border-right:3px solid #58a6ff;
+
+    width:0;
+
+    text-shadow:
+    0 0 12px rgba(88,166,255,0.25);
+
+    animation:
+        typing 5s steps(50,end) forwards,
+        blink .8s infinite;
+}
+
+@keyframes typing{
+
+    from{
+        width:0;
+    }
+
+    to{
+        width:100%;
+    }
+}
+
+@keyframes blink{
+
+    50%{
+        border-color:transparent;
+    }
+}
+
+/* HEART */
+
+.heart{
+
+    margin-top:40px;
+
+    text-align:center;
+
+    font-size:30px;
+
+    color:#7ee787;
+
+    animation:pulse 1.8s infinite;
+
+    text-shadow:
+    0 0 18px rgba(126,231,135,0.35);
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.12);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* BUTTON */
+
+.btn-container{
+
+    text-align:center;
+
+    margin-top:40px;
+}
+
+.btn{
+
+    display:inline-block;
+
+    padding:15px 34px;
+
+    border:
+    1px solid rgba(88,166,255,0.35);
+
+    border-radius:16px;
+
+    text-decoration:none;
+
+    color:#58a6ff;
+
+    transition:
+    all .6s cubic-bezier(.22,1,.36,1);
+
+    backdrop-filter:blur(10px);
+}
+
+.btn:hover{
+
+    background:#58a6ff;
+
+    color:#0d1117;
+
+    transform:
+    translateY(-4px);
+
+    box-shadow:
+    0 0 28px rgba(88,166,255,0.35);
+}
+
+/* FOOTER */
+
+.footer{
+
+    margin-top:40px;
+
+    text-align:center;
+
+    color:#8b949e;
+
+    font-size:13px;
+}
+
+/* POPUP */
+
+.popup{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.88);
+
+    backdrop-filter:blur(10px);
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    flex-direction:column;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:
+    all 1s cubic-bezier(.22,1,.36,1);
+
+    z-index:9999;
+}
+
+.popup.show{
+
+    opacity:1;
+
+    pointer-events:auto;
+}
+
+.popup-content{
+
+    text-align:center;
+
+    transform:scale(.8);
+
+    opacity:0;
+
+    transition:
+    all 1s cubic-bezier(.22,1,.36,1);
+}
+
+.popup.show .popup-content{
+
+    transform:scale(1);
+
+    opacity:1;
+}
+
+.popup img{
+
+    width:430px;
+
+    max-width:90%;
+
+    border-radius:26px;
+
+    border:
+    2px solid rgba(88,166,255,0.35);
+
+    box-shadow:
+    0 0 40px rgba(88,166,255,0.28),
+    0 0 120px rgba(88,166,255,0.08);
+}
+
+/* END MESSAGE */
+
+.end-message{
+
+    margin-top:28px;
+
+    color:#58a6ff;
+
+    font-size:18px;
+
+    text-shadow:
+    0 0 12px rgba(88,166,255,0.25);
+
+    opacity:0;
+
+    animation:
+    fadeUp 1.5s forwards;
+
+    animation-delay:1s;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0px);
+    }
+}
+
+/* CLOSE */
+
+.close-btn{
+
+    margin-top:26px;
+
+    display:inline-block;
+
+    padding:12px 24px;
+
+    border:
+    1px solid rgba(88,166,255,0.35);
+
+    border-radius:12px;
+
+    color:#58a6ff;
+
+    cursor:pointer;
+
+    transition:.4s;
+}
+
+.close-btn:hover{
+
+    background:#58a6ff;
+
+    color:#0d1117;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .content{
+
+        padding:28px;
+
+        font-size:15px;
+    }
+
+    .typing{
+
+        white-space:normal;
+
+        border:none;
+
+        width:100%;
+
+        animation:none;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MATRIX -->
+
+<canvas id="matrix"></canvas>
+
+<!-- BOOT -->
+
+<div class="boot-screen" id="bootScreen">
+
+    <div class="boot-text" id="bootText"></div>
+
+</div>
+
+<!-- FLOATING CODE -->
+
+<div class="code" style="left:5%;">
+git commit -m "Finally graduated"
+</div>
+
+<div class="code" style="left:25%;">
+while(true){ love++; }
+</div>
+
+<div class="code" style="left:50%;">
+ssh heart@lover.local
+</div>
+
+<div class="code" style="left:70%;">
+ACCESS GRANTED ❤️
+</div>
+
+<div class="code" style="left:88%;">
+sudo make me yours
+</div>
+
+<!-- TERMINAL -->
+
+<div class="terminal" id="terminal">
+
+    <div class="topbar">
+
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+
+        <div class="title">
+            graduation_invitation.html
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="typing">
+            $ graduation_invitation.exe initialized
+        </div>
+
+        <br><br>
+
+        <div id="loadingText">
+
+            > Loading university memories...
+
+            <span id="progressBar"></span>
+
+            <span id="percent">0%</span>
+
+        </div>
+
+        <br><br>
+
+        <div id="terminalText"></div>
+
+        <div class="heart">
+            &lt;/&gt; ❤️ &lt;/&gt;
+        </div>
+
+        <div class="btn-container">
+
+            <a href="#" class="btn" onclick="openPopup()">
+                ACCEPT INVITATION
+            </a>
+
+        </div>
+
+        <div class="footer">
+            Created with love by your favorite programmer.
+        </div>
+
+    </div>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+    <div class="popup-content">
+
+        <img src="totnghiep.jpg" alt="Graduation Photo">
+
+        <div class="end-message">
+            MISSION COMPLETED ❤️
+            <br>
+            Thank you for being part of my university journey.
+        </div>
+
+        <div class="close-btn" onclick="closePopup()">
+            CLOSE
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* BOOT */
+
+const bootLines = [
+
+"> Initializing system...",
+"> Loading memories...",
+"> Connecting to heart.local...",
+"> Decrypting feelings...",
+"> Identity verified ❤️",
+"> Starting graduation_invitation.exe..."
+
+];
+
+let index = 0;
+
+const bootText = document.getElementById("bootText");
+
+function typeBoot(){
+
+    if(index < bootLines.length){
+
+        bootText.innerHTML += bootLines[index] + "\n";
+
+        index++;
+
+        setTimeout(typeBoot,850);
+
+    }else{
+
+        setTimeout(() => {
+
+            document.getElementById("bootScreen")
+            .style.opacity = "0";
+
+            setTimeout(() => {
+
+                document.getElementById("bootScreen")
+                .style.display = "none";
+
+                document.getElementById("terminal")
+                .style.opacity = "1";
+
+                startLoading();
+
+            },1000);
+
+        },1200);
+    }
+}
+
+typeBoot();
+
+/* LOADING */
+
+function startLoading(){
+
+    const progressBar =
+    document.getElementById("progressBar");
+
+    const percent =
+    document.getElementById("percent");
+
+    let progress = 0;
+
+    const interval = setInterval(() => {
+
+        progress++;
+
+        progressBar.innerHTML =
+            "█".repeat(progress / 10) +
+            "░".repeat(10 - progress / 10);
+
+        percent.innerHTML = progress + "%";
+
+        if(progress >= 100){
+
+            clearInterval(interval);
+
+            setTimeout(showLines,900);
+        }
+
+    },40);
+}
+
+/* TERMINAL TEXT */
+
+const lines = [
+
+"> Fixing bugs in life... completed",
+"> Survived deadlines and exams",
+"> Degree unlocked successfully 🎓",
+"> Final mission detected...",
+"",
+"SYSTEM MESSAGE:",
+"",
+"You are officially invited",
+"to my graduation ceremony ❤️",
+"",
+"DATE: 20/06/2026",
+"TIME: 08:00 AM",
+"LOCATION: UIT University",
+"",
+"Dress code: Pretty as always ✨"
+
+];
+
+const terminalText =
+document.getElementById("terminalText");
+
+let lineIndex = 0;
+
+function showLines(){
+
+    if(lineIndex < lines.length){
+
+        const newLine =
+        document.createElement("div");
+
+        newLine.innerHTML =
+        lines[lineIndex];
+
+        newLine.style.opacity = "0";
+
+        newLine.style.transform =
+        "translateY(14px)";
+
+        newLine.style.transition =
+        "all .7s cubic-bezier(.22,1,.36,1)";
+
+        terminalText.appendChild(newLine);
+
+        setTimeout(() => {
+
+            newLine.style.opacity = "1";
+
+            newLine.style.transform =
+            "translateY(0px)";
+
+        },100);
+
+        lineIndex++;
+
+        setTimeout(showLines,850);
+    }
+}
+
+/* MATRIX */
+
+const canvas =
+document.getElementById("matrix");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters =
+"アァカサタナハマヤャラワン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const fontSize = 16;
+
+const columns =
+canvas.width / fontSize;
+
+const drops = [];
+
+for(let x = 0; x < columns; x++){
+
+    drops[x] = 1;
+}
+
+function drawMatrix(){
+
+    ctx.fillStyle =
+    "rgba(13,17,23,0.03)";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.fillStyle = "#58a6ff";
+
+    ctx.font =
+    fontSize + "px monospace";
+
+    for(let i = 0; i < drops.length; i++){
+
+        const text =
+        letters.charAt(
+            Math.floor(
+                Math.random() *
+                letters.length
+            )
+        );
+
+        ctx.fillText(
+            text,
+            i * fontSize,
+            drops[i] * fontSize
+        );
+
+        if(
+            drops[i] * fontSize >
+            canvas.height
+            &&
+            Math.random() > 0.975
+        ){
+
+            drops[i] = 0;
+        }
+
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix,35);
+
+window.addEventListener("resize", () => {
+
+    canvas.width = window.innerWidth;
+
+    canvas.height = window.innerHeight;
+
+});
+
+/* POPUP */
+
+function openPopup(){
+
+    document.getElementById("popup")
+    .classList.add("show");
+
+    document.getElementById("terminal")
+    .style.opacity = ".15";
+}
+
+function closePopup(){
+
+    document.getElementById("popup")
+    .classList.remove("show");
+
+    document.getElementById("terminal")
+    .style.opacity = "1";
+}
+
+</script>
+
+</body>
+</html>
