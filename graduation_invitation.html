@@ -1,5 +1,6 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +30,7 @@ body{
     background-position:center;
     background-repeat:no-repeat;
 
-    overflow:hidden;
+    overflow:auto;
 
     font-family:'JetBrains Mono', monospace;
 
@@ -174,6 +175,28 @@ body::before{
 
     transition:
     all 1s cubic-bezier(.22,1,.36,1);
+}
+
+.terminal::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    border-radius:24px;
+
+    background:linear-gradient(
+        45deg,
+        rgba(88,166,255,0.15),
+        transparent,
+        rgba(126,231,135,0.12)
+    );
+
+    z-index:-1;
+
+    filter:blur(20px);
 }
 
 /* TOPBAR */
@@ -327,6 +350,37 @@ body::before{
     all .6s cubic-bezier(.22,1,.36,1);
 
     backdrop-filter:blur(10px);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        transparent
+    );
+
+    transition:1s;
+}
+
+.btn:hover::before{
+
+    left:120%;
 }
 
 .btn:hover{
@@ -384,6 +438,35 @@ body::before{
     z-index:9999;
 }
 
+.popup::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:600px;
+
+    background:
+    radial-gradient(
+        rgba(88,166,255,0.18),
+        transparent 70%
+    );
+
+    animation:rotateGlow 10s linear infinite;
+}
+
+@keyframes rotateGlow{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
 .popup.show{
 
     opacity:1;
@@ -401,6 +484,8 @@ body::before{
 
     transition:
     all 1s cubic-bezier(.22,1,.36,1);
+
+    z-index:2;
 }
 
 .popup.show .popup-content{
@@ -489,13 +574,68 @@ body::before{
     color:#0d1117;
 }
 
+/* PARTICLES */
+
+.particle{
+
+    position:fixed;
+
+    width:4px;
+    height:4px;
+
+    background:#58a6ff;
+
+    border-radius:50%;
+
+    opacity:.25;
+
+    animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+
+    from{
+        transform:translateY(100vh);
+    }
+
+    to{
+        transform:translateY(-120vh);
+    }
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#58a6ff55;
+    border-radius:10px;
+}
+
 /* MOBILE */
 
 @media(max-width:768px){
 
+    body{
+        overflow:auto;
+    }
+
+    .terminal{
+
+        top:20px;
+
+        left:50%;
+
+        transform:translateX(-50%);
+
+        margin-bottom:40px;
+    }
+
     .content{
 
-        padding:28px;
+        padding:24px;
 
         font-size:15px;
     }
@@ -510,14 +650,22 @@ body::before{
 
         animation:none;
     }
+
+    .btn{
+
+        width:100%;
+    }
+
+    .popup img{
+
+        width:90%;
+    }
 }
 
 </style>
 </head>
 
 <body>
-
-<!-- MATRIX -->
 
 <canvas id="matrix"></canvas>
 
@@ -596,7 +744,7 @@ sudo make me yours
         <div class="btn-container">
 
             <a href="#" class="btn" onclick="openPopup()">
-                ACCEPT INVITATION
+                OPEN FINAL MEMORY
             </a>
 
         </div>
@@ -618,9 +766,14 @@ sudo make me yours
         <img src="totnghiep.jpg" alt="Graduation Photo">
 
         <div class="end-message">
-            MISSION COMPLETED ❤️
-            <br>
-            Thank you for being part of my university journey.
+
+            GRADUATION UNLOCKED 🎓
+
+            <br><br>
+
+            Cảm ơn em đã xuất hiện
+            trong những năm tháng đẹp nhất của anh ❤️
+
         </div>
 
         <div class="close-btn" onclick="closePopup()">
@@ -630,6 +783,12 @@ sudo make me yours
     </div>
 
 </div>
+
+<!-- MUSIC -->
+
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
@@ -740,6 +899,7 @@ const lines = [
 "trong quãng đời sinh viên của anh ✨",
 "",
 "Dress code: Xinh như bình thường là được."
+
 ];
 
 const terminalText =
@@ -865,6 +1025,27 @@ window.addEventListener("resize", () => {
 
 });
 
+/* PARTICLES */
+
+for(let i = 0; i < 40; i++){
+
+    const particle =
+    document.createElement("div");
+
+    particle.classList.add("particle");
+
+    particle.style.left =
+    Math.random() * 100 + "vw";
+
+    particle.style.animationDuration =
+    6 + Math.random() * 10 + "s";
+
+    particle.style.animationDelay =
+    Math.random() * 5 + "s";
+
+    document.body.appendChild(particle);
+}
+
 /* POPUP */
 
 function openPopup(){
@@ -889,3 +1070,4 @@ function closePopup(){
 
 </body>
 </html>
+```
